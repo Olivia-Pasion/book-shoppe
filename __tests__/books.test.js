@@ -19,11 +19,19 @@ describe('backend-express-template routes', () => {
   });
   it('#GET /books/:id should return title, released, and authors []', async () => {
     const resp = await request(app).get('/books/1');
-    console.log('LOOK HERE', resp.body);
     expect(resp.body).toEqual({
       title: expect.any(String),
       released: expect.any(Number),
       authors: expect.any(Array)
+    });
+  });
+  it('#POST /books should add a new book', async () => {
+    const resp = await request(app).post('/books').send({ title: 'Relic', released:  1995 });
+    expect(resp.status).toBe(200);
+    expect(resp.body).toEqual({
+      id: expect.any(String),
+      title: expect.any(String),
+      released: expect.any(Number),
     });
   });
   afterAll(() => {

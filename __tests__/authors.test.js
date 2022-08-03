@@ -16,6 +16,17 @@ describe('backend-express-template routes', () => {
       name: expect.any(String)
     });
   });
+
+  it('#GET /authors/:id should return author details and book details', async () => {
+    const resp = await request(app).get('/authors/1');
+    console.log('LOOK HERE', resp.body);
+    expect(resp.body).toEqual({
+      name: expect.any(String),
+      dob: expect.any(String),
+      pob: expect.any(String),
+      books: expect.any(Array),
+    });
+  });
   afterAll(() => {
     pool.end();
   });
