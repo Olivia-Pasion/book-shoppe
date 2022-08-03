@@ -1,8 +1,7 @@
 const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
-const { request } = require('express');
-// const request = require('supertest');
-// const app = require('../lib/app');
+const request = require('supertest');
+const app = require('../lib/app');
 
 describe('backend-express-template routes', () => {
   beforeEach(() => {
@@ -17,5 +16,16 @@ describe('backend-express-template routes', () => {
       title: expect.any(String),
       released: expect.any(Number)
     });
+  });
+  it('GET /books/:id should return title, released, and authors []', async () => {
+    const resp = await request(app).get('/books/1');
+    expect(resp.body).toEqual({
+      title: expect.any(String),
+      released: expect.any(Number),
+      authors: expect.any(Array)
+    });
+  });
+  afterAll(() => {
+    pool.end();
   });
 });
