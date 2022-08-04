@@ -19,12 +19,23 @@ describe('backend-express-template routes', () => {
 
   it('#GET /authors/:id should return author details and book details', async () => {
     const resp = await request(app).get('/authors/1');
-    console.log('LOOK HERE', resp.body);
     expect(resp.body).toEqual({
       name: expect.any(String),
       dob: expect.any(String),
       pob: expect.any(String),
       books: expect.any(Array),
+    });
+  });
+  it('#POST /authors should add new authors', async () => {
+    const resp = await request(app).post('/authors').send(
+      { name: 'Douglas Preston', dob: '5-20-1956', pob: 'Cambridge, Massachusetts, United States' }
+    );
+    expect(resp.status).toBe(200);
+    expect(resp.body).toEqual({
+      id: expect.any(String),
+      name:expect.any(String),
+      dob: expect.any(String),
+      pob: expect.any(String),
     });
   });
   afterAll(() => {
